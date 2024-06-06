@@ -22,7 +22,6 @@ public class CustomUserDetailService implements UserDetailsService {
         if(users == null){
             throw new UsernameNotFoundException("User can't exist");
         }
-
         return new User(username, users.getPassword(), new ArrayList<>());
     }
 }
