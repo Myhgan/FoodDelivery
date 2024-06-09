@@ -22,7 +22,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
     JwtUtilsHelper jwtUtilsHelper;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String token = getTokenFrontHeader(request);
+        String token = getTokenFromHeader(request);
         if(token != null){
             if (jwtUtilsHelper.verifyToken(token)){
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken("","", new ArrayList<>());
@@ -33,7 +33,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private String getTokenFrontHeader(HttpServletRequest request){
+    private String getTokenFromHeader(HttpServletRequest request){
         String header = request.getHeader("Authorization");
         String token = null;
         if(StringUtils.hasText(header) && header.startsWith("Bearer ")){

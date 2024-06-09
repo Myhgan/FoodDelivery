@@ -4,16 +4,11 @@ import com.demo.food.payload.ResponseData;
 import com.demo.food.payload.request.SignupRequest;
 import com.demo.food.service.imp.LoginServiceImp;
 import com.demo.food.utils.JwtUtilsHelper;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Encoders;
-import io.jsonwebtoken.security.Keys;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.crypto.SecretKey;
-import java.util.Base64;
 
 @RestController
 @RequestMapping("/login")

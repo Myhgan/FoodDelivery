@@ -1,4 +1,5 @@
-
+server:
+  port: 805
 spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/osahaneat
@@ -11,6 +12,11 @@ spring:
   properties:
     hibernate:
       dialect: org.hibernate.dialect.MySQLDialect
-
+  servlet:
+    multipart:
+      max-file-size: 10MB
 jwt:
   privateKey: Mqzz+q/zH37ayuxa4tkIvqx7+wypHnsT/PnWnyATnnOk=
+
+fileUpload:
+  rootpath: D:\LearningAtHome\BE\uploads
