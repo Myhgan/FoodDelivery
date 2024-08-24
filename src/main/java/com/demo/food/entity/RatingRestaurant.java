@@ -3,6 +3,7 @@ package com.demo.food.entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "ratingrestaurant")
 public class RatingRestaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +18,7 @@ public class RatingRestaurant {
     @Column(name = "content")
     private String content;
     @Column(name = "rate_point")
-    private String ratePoint;
+    private double ratePoint;
 
     public int getId() {
         return id;
@@ -51,11 +52,11 @@ public class RatingRestaurant {
         this.content = content;
     }
 
-    public String getRatePoint() {
+    public double getRatePoint() {
         return ratePoint;
     }
 
-    public void setRatePoint(String ratePoint) {
+    public void setRatePoint(double ratePoint) {
         this.ratePoint = ratePoint;
     }
 }

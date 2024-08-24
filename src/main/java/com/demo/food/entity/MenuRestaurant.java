@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "menurestaurant")
 public class MenuRestaurant {
     @EmbeddedId
     KeyMenuRestaurant keys;

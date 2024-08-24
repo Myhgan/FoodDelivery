@@ -1,0 +1,35 @@
+#docker-compose.yml
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: osahaneat
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db.sql:/docker-entrypoint-initdb.d/dbfood.sql
+
+  springboot-app:
+    image: myhgan1/fooddelivery:latest
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    container_name: food-delivery
+    ports:
+      - "805:1234"
+    environment:
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/osahaneat
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:

@@ -15,8 +15,19 @@ public class Food {
     private String image;
     @Column(name = "time_ship")
     private String timeShip;
-    @Column(name = " price")
+    @Column(name = "price")
     private  double price;
+    @Column(name = "is_freeship")
+    private Boolean isFreeship;
+
+    public Boolean getFreeship() {
+        return isFreeship;
+    }
+
+    public void setFreeship(Boolean freeship) {
+        isFreeship = freeship;
+    }
+
     @ManyToOne
     @JoinColumn(name = "cate_id")
     private Category category;
