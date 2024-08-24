@@ -38,7 +38,7 @@ public class CustomFilterSecurity {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login/**").permitAll()
+                        .requestMatchers("/login/**", "/restaurant/file/**", "/restaurant/detail").permitAll()
                         .anyRequest()
                         .authenticated()
                 );

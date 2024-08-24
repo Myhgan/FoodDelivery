@@ -44,7 +44,7 @@ public class FileService implements FileServiceImp {
     @Override
     public Resource loadFile(String fileName) {
         try {
-            init();
+            init(); 
             Path file = root.resolve(fileName);
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()){

@@ -1,7 +1,7 @@
 package com.demo.food.payload;
 
 public class ResponseData {
-    private int status;
+    private int status = 200;
     private boolean isSuccess = true;
     private String desc;
     private Object data;

@@ -3,6 +3,7 @@ server:
 spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/osahaneat
+#    url: jdbc:mysql://host.docker.internal:3306/osahaneat
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -20,3 +21,9 @@ jwt:
 
 fileUpload:
   rootpath: D:\LearningAtHome\BE\uploads
+
+logging:
+  level:
+    root: trace
+  file:
+    name
