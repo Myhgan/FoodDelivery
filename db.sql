@@ -16,23 +16,23 @@
 
 
 -- Dumping database structure for osahaneat
-DROP DATABASE IF EXISTS `osahaneat`;
 CREATE DATABASE IF NOT EXISTS `osahaneat` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `osahaneat`;
 
 -- Dumping structure for table osahaneat.category
-DROP TABLE IF EXISTS `category`;
 CREATE TABLE IF NOT EXISTS `category` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name_cate` varchar(50) DEFAULT NULL,
   `create_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table osahaneat.category: ~0 rows (approximately)
+INSERT INTO `category` (`id`, `name_cate`, `create_date`) VALUES
+	(1, 'Buger', '2024-08-17 17:32:10'),
+	(2, 'pizza', '2024-08-19 12:42:33');
 
 -- Dumping structure for table osahaneat.food
-DROP TABLE IF EXISTS `food`;
 CREATE TABLE IF NOT EXISTS `food` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
@@ -40,29 +40,32 @@ CREATE TABLE IF NOT EXISTS `food` (
   `time_ship` varchar(10) DEFAULT NULL,
   `price` decimal(10,0) DEFAULT NULL,
   `cate_id` int DEFAULT NULL,
+  `is_freeship` tinyint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_food_cate_id` (`cate_id`),
   CONSTRAINT `fk_food_cate_id` FOREIGN KEY (`cate_id`) REFERENCES `category` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table osahaneat.food: ~0 rows (approximately)
+-- Dumping data for table osahaneat.food: ~1 rows (approximately)
+INSERT INTO `food` (`id`, `title`, `image`, `time_ship`, `price`, `cate_id`, `is_freeship`) VALUES
+	(7, 'sada fff', 'Hậu.jpg', '20 minues', 65000, 1, 1);
 
 -- Dumping structure for table osahaneat.menurestaurant
-DROP TABLE IF EXISTS `menurestaurant`;
 CREATE TABLE IF NOT EXISTS `menurestaurant` (
-  `cate_id` int NOT NULL,
   `res_id` int NOT NULL,
+  `cate_id` int NOT NULL,
   `create_date` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`cate_id`,`res_id`),
-  KEY `fk_menurestaurant_res_id` (`res_id`),
-  CONSTRAINT `fk_menurestaurant_cate_id` FOREIGN KEY (`cate_id`) REFERENCES `category` (`id`),
-  CONSTRAINT `fk_menurestaurant_res_id` FOREIGN KEY (`res_id`) REFERENCES `category` (`id`)
+  PRIMARY KEY (`res_id`,`cate_id`) USING BTREE,
+  KEY `fk_menurestaurant_res_id` (`cate_id`) USING BTREE,
+  CONSTRAINT `FK_menurestaurant_category` FOREIGN KEY (`cate_id`) REFERENCES `category` (`id`),
+  CONSTRAINT `FK_menurestaurant_restaurant` FOREIGN KEY (`res_id`) REFERENCES `restaurant` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table osahaneat.menurestaurant: ~0 rows (approximately)
+INSERT INTO `menurestaurant` (`res_id`, `cate_id`, `create_date`) VALUES
+	(2, 1, '2024-08-19 12:53:51');
 
 -- Dumping structure for table osahaneat.orderitem
-DROP TABLE IF EXISTS `orderitem`;
 CREATE TABLE IF NOT EXISTS `orderitem` (
   `order_id` int NOT NULL,
   `food_id` int NOT NULL,
@@ -76,7 +79,6 @@ CREATE TABLE IF NOT EXISTS `orderitem` (
 -- Dumping data for table osahaneat.orderitem: ~0 rows (approximately)
 
 -- Dumping structure for table osahaneat.orders
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
@@ -87,12 +89,11 @@ CREATE TABLE IF NOT EXISTS `orders` (
   KEY `fk_orders_res_id` (`res_id`),
   CONSTRAINT `fk_orders_res_id` FOREIGN KEY (`res_id`) REFERENCES `restaurant` (`id`),
   CONSTRAINT `fk_orders_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table osahaneat.orders: ~0 rows (approximately)
+-- Dumping data for table osahaneat.orders: ~1 rows (approximately)
 
 -- Dumping structure for table osahaneat.promo
-DROP TABLE IF EXISTS `promo`;
 CREATE TABLE IF NOT EXISTS `promo` (
   `id` int NOT NULL AUTO_INCREMENT,
   `res_id` int DEFAULT NULL,
@@ -107,7 +108,6 @@ CREATE TABLE IF NOT EXISTS `promo` (
 -- Dumping data for table osahaneat.promo: ~0 rows (approximately)
 
 -- Dumping structure for table osahaneat.ratingfood
-DROP TABLE IF EXISTS `ratingfood`;
 CREATE TABLE IF NOT EXISTS `ratingfood` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
@@ -124,7 +124,6 @@ CREATE TABLE IF NOT EXISTS `ratingfood` (
 -- Dumping data for table osahaneat.ratingfood: ~0 rows (approximately)
 
 -- Dumping structure for table osahaneat.ratingrestaurant
-DROP TABLE IF EXISTS `ratingrestaurant`;
 CREATE TABLE IF NOT EXISTS `ratingrestaurant` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int DEFAULT NULL,
@@ -136,12 +135,14 @@ CREATE TABLE IF NOT EXISTS `ratingrestaurant` (
   KEY `fk_ratingrestaurant_res_id` (`res_id`),
   CONSTRAINT `fk_ratingrestaurant_res_id` FOREIGN KEY (`res_id`) REFERENCES `restaurant` (`id`),
   CONSTRAINT `fk_ratingrestaurant_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Dumping data for table osahaneat.ratingrestaurant: ~0 rows (approximately)
+-- Dumping data for table osahaneat.ratingrestaurant: ~2 rows (approximately)
+INSERT INTO `ratingrestaurant` (`id`, `user_id`, `res_id`, `content`, `rate_point`) VALUES
+	(1, 2, 2, 'so very good', 5),
+	(2, 1, 2, 'not bad\r\n', 4);
 
 -- Dumping structure for table osahaneat.restaurant
-DROP TABLE IF EXISTS `restaurant`;
 CREATE TABLE IF NOT EXISTS `restaurant` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
@@ -152,12 +153,13 @@ CREATE TABLE IF NOT EXISTS `restaurant` (
   `address` varchar(255) DEFAULT NULL,
   `open_date` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table osahaneat.restaurant: ~0 rows (approximately)
+INSERT INTO `restaurant` (`id`, `title`, `subtitle`, `description`, `image`, `is_freeship`, `address`, `open_date`) VALUES
+	(2, 'Buger King', 'American, Fast Food', 'asgdh danskjd nakd', 'Hậu.jpg', 1, 'nguyen duy trinh, long truong', '2024-08-01 17:00:00');
 
 -- Dumping structure for table osahaneat.roles
-DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `role_name` varchar(20) DEFAULT NULL,
@@ -171,7 +173,6 @@ INSERT INTO `roles` (`id`, `role_name`, `create_date`) VALUES
 	(2, 'Role_user', NULL);
 
 -- Dumping structure for table osahaneat.users
-DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_name` varchar(50) DEFAULT NULL,

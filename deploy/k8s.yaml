@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: myapp
-#          image: 730335535567.dkr.ecr.ap-southeast-1.amazonaws.com/sarah:latest
+#          image: 730335535567.dkr.ecr.ap-southeast-1.amazonaws.com/fooddelivery:latest
           image: myhgan1/fooddelivery:latest
           ports:
             - containerPort: 1234
