@@ -24,6 +24,6 @@ fileUpload:
 
 logging:
   level:
-    root: trace
+    root:
   file:
     name

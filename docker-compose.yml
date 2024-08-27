@@ -3,7 +3,7 @@ version: '3.8'
 
 services:
   mysql:
-    image: mysql:latest
+    image: myhgan1/mysql:latest
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: "root"
@@ -17,11 +17,11 @@ services:
   springboot-app:
     image: myhgan1/fooddelivery:latest
     build:
-      context: ..
+      context: .
       dockerfile: Dockerfile
     container_name: food-delivery
     ports:
-      - "805:1234"
+      - "805:805"
     environment:
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/osahaneat
